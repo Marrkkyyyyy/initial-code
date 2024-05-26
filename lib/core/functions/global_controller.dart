@@ -1,13 +1,19 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
+import 'package:initial_code/core/functions/check_internet.dart';
 import '../services/services.dart';
 
 class GlobalController extends GetxController {
+  final Connectivity _connectivity = Connectivity();
+  CheckConnection connection = CheckConnection();
   MyServices myServices = Get.find();
   String? userType;
 
   @override
   void onInit() {
     super.onInit();
+    _connectivity.onConnectivityChanged
+        .listen(connection.connectionStatus);
     initializeUser();
   }
 

@@ -6,9 +6,10 @@ import '../functions/check_internet.dart';
 import 'status_request.dart';
 
 class Crud {
+  CheckConnection connection = CheckConnection();
   Future<Either<StatusRequest, Map>> postData(String linkurl, Map data) async {
     try {
-      if (await checkInternet()) {
+      if (await connection.checkInternet()) {
         var response = await http.post(Uri.parse(linkurl), body: data);
         if (response.statusCode == 200 || response.statusCode == 201) {
           Map responsebody = jsonDecode(response.body);
@@ -27,7 +28,7 @@ class Crud {
   Future<Either<StatusRequest, Map>> postImageData(
       String linkurl, Map<String, dynamic> parameters) async {
     try {
-      if (await checkInternet()) {
+      if (await connection.checkInternet()) {
         Uri uri = Uri.parse(linkurl);
         var request = http.MultipartRequest('POST', uri);
 
